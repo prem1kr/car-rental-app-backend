@@ -57,7 +57,7 @@ export const Login = async (req, res) => {
 
         res.cookie("token", token);
 
-        res.status(201).json({ message: "user Login successfully" });
+        res.status(201).json({ message: `user Login successfully ${token,user}`});
         console.log(user, token);
 
     } catch (error) {
