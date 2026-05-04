@@ -35,6 +35,12 @@ export const Login = async (req, res) => {
             res.status(200).json({ message: "user not registered, signup first" });
         }
 
+        if (role && user.role !== role) {
+            return res.status(403).json({
+                message: `Access denied for role: ${role}`,
+            });
+        }
+
         const isMatch = await bcrypt.compare(password, user.password);
         if (!isMatch) {
             res.status(501).json({ message: "Invalid Password" });
