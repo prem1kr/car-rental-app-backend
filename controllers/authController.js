@@ -50,7 +50,7 @@ export const Login = async (req, res) => {
 
         if (role && role !== user.role) {
             return res.status(403).json({
-                message: `Access denied for role: ${role}`,
+                message: `Access denied. You are registered as ${user.role}`,
             });
         }
 
@@ -77,10 +77,11 @@ export const Login = async (req, res) => {
         });
 
     } catch (error) {
-        console.log("Login Error:", error);
+        console.log(error);
         return res.status(500).json({ message: "Server Error" });
     }
 };
+
 
 export const User = async (req, res) => {
     try {
