@@ -2,83 +2,107 @@ import authModel from "../models/authModel.js";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 
+// ================= SIGNUP =================
 export const Signup = async (req, res) => {
     try {
         const { role, name, email, password } = req.body;
-        const IsUser = await authModel.findOne({ email });
-        if (IsUser) {
-            res.status(200).json({ message: "User Email already exists" });
+
+        const existingUser = await authModel.findOne({ email });
+
+        if (existingUser) {
+            return res.status(409).json({ message: "User already exists" });
         }
+
         const hashPassword = await bcrypt.hash(password, 10);
+
         const user = await authModel.create({
             role,
             name,
             email,
-            password: hashPassword
+            password: hashPassword,
         });
 
-        res.status(201).json({ message: `User Signup Successfully ${user}` });
-        console.log(user);
-
-    } catch (error) {
-        res.status(404).json({ message: "Server Error" });
-        console.log(`Error during the signup process ${error}`)
-    }
-}
-
-
-export const Login = async (req, res) => {
-    try {
-        const { role, email, password } = req.body;
-        const user = await authModel.findOne({ email });
-        if (!user) {
-            res.status(200).json({ message: "user not registered, signup first" });
-        }
-
-        if (role && user.role !== role) {
-            return res.status(403).json({
-                message: `Access denied for role: ${role}`,
-            });
-        }
-
-        const isMatch = await bcrypt.compare(password, user.password);
-        if (!isMatch) {
-            res.status(501).json({ message: "Invalid Password" });
-        }
-
-        const token = jwt.sign({
+        return res.status(201).json({
+            message: "Signup successful",
             user: {
                 id: user._id,
-                role: user.role,
+                name: user.name,
                 email: user.email,
-                name: user.name
-            }
-        }, process.env.JWT_SECRET, { expiresIn: "7d" });
-
-        res.cookie("token", token);
-
-        res.status(201).json({ message: "user Login successfully" });
-        console.log(user, token);
+                role: user.role,
+            },
+        });
 
     } catch (error) {
         console.log(error);
-        res.status(404).json({ message: "Server Error" });
+        return res.status(500).json({ message: "Server Error" });
     }
-}
+};
 
 
+// ================= LOGIN =================
+export const Login = async (req, res) => {
+    try {
+        const { email, password } = req.body;
+
+        const user = await authModel.findOne({ email });
+
+        if (!user) {
+            return res.status(404).json({ message: "User not registered" });
+        }
+
+        const isMatch = await bcrypt.compare(password, user.password);
+
+        if (!isMatch) {
+            return res.status(401).json({ message: "Invalid password" });
+        }
+
+        const token = jwt.sign(
+            {
+                id: user._id,
+                role: user.role,
+                email: user.email,
+                name: user.name,
+            },
+            process.env.JWT_SECRET,
+            { expiresIn: "7d" }
+        );
+
+        return res.status(200).json({
+            message: "Login successful",
+            token,
+            user: {
+                id: user._id,
+                name: user.name,
+                email: user.email,
+                role: user.role,
+            },
+        });
+
+    } catch (error) {
+        console.log(error);
+        return res.status(500).json({ message: "Server Error" });
+    }
+};
+
+
+// ================= GET USER (PROTECTED) =================
 export const User = async (req, res) => {
     try {
         const userId = req.user.id;
+
         const user = await authModel.findById(userId).select("-password");
-        if(!user){
-            res.status(404).json({message:"user not logged"});
+
+        if (!user) {
+            return res.status(404).json({ message: "User not found" });
         }
-        res.status(201).json({message:`user data fetched successfully ${user}`});
-        console.log(userInfo,user);
+
+        return res.status(200).json({
+            message: "User data fetched successfully",
+            user,
+        });
 
     } catch (error) {
-        console.log("error during user data fetching");
-        res.status(500).json({ message: "Server Error" });
+        console.log(error);
+        return res.status(500).json({ message: "Server Error" });
     }
-} 
+};
