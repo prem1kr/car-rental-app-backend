@@ -2,19 +2,15 @@ import authModel from "../models/authModel.js";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 
-// ================= SIGNUP =================
 export const Signup = async (req, res) => {
     try {
         const { role, name, email, password } = req.body;
-
         const existingUser = await authModel.findOne({ email });
-
         if (existingUser) {
             return res.status(409).json({ message: "User already exists" });
         }
 
         const hashPassword = await bcrypt.hash(password, 10);
-
         const user = await authModel.create({
             role,
             name,
@@ -39,21 +35,23 @@ export const Signup = async (req, res) => {
 };
 
 
-// ================= LOGIN =================
 export const Login = async (req, res) => {
     try {
-        const { email, password } = req.body;
-
+        const { email, password, role } = req.body;
         const user = await authModel.findOne({ email });
-
         if (!user) {
             return res.status(404).json({ message: "User not registered" });
         }
 
         const isMatch = await bcrypt.compare(password, user.password);
-
         if (!isMatch) {
             return res.status(401).json({ message: "Invalid password" });
+        }
+
+        if (role && role !== user.role) {
+            return res.status(403).json({
+                message: `Access denied for role: ${role}`,
+            });
         }
 
         const token = jwt.sign(
@@ -79,19 +77,15 @@ export const Login = async (req, res) => {
         });
 
     } catch (error) {
-        console.log(error);
+        console.log("Login Error:", error);
         return res.status(500).json({ message: "Server Error" });
     }
 };
 
-
-// ================= GET USER (PROTECTED) =================
 export const User = async (req, res) => {
     try {
         const userId = req.user.id;
-
         const user = await authModel.findById(userId).select("-password");
-
         if (!user) {
             return res.status(404).json({ message: "User not found" });
         }
