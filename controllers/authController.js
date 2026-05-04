@@ -65,3 +65,20 @@ export const Login = async (req, res) => {
         res.status(404).json({ message: "Server Error" });
     }
 }
+
+
+export const User = async (req, res) => {
+    try {
+        const userId = req.user.id;
+        const user = await authModel.findById(userId).select("-password");
+        if(!user){
+            res.status(404).json({message:"user not logged"});
+        }
+        res.status(201).json({message:`user data fetched successfully ${user}`});
+        console.log(userInfo,user);
+
+    } catch (error) {
+        console.log("error during user data fetching");
+        res.json({ message: "Server Error" });
+    }
+} 
