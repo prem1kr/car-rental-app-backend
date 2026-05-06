@@ -13,7 +13,11 @@ const app = express();
 app.use(express.json());
 app.use(cors());
 const server = createServer(app);
-const io = new Server(server);
+const io = new Server(server, {
+    cors: {
+        origin:'http://localhost:8081'
+    }
+});
 
 socketConnection(io);
 
@@ -21,6 +25,10 @@ app.use('/api/auth', authRouter);
 
 io.on('connection', (socket)=> {
     console.log('a user connected', socket.id);
+    io.emit("new_user", socket.id);
+    socket.on("disconnect", ()=> {
+        console.log('user disconnected', socket.id);
+    })
 })
 
 const startServer = async () => {
