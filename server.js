@@ -18,7 +18,6 @@ const io = new Server(server, {
         origin:'http://localhost:8081'
     }
 });
-
 socketConnection(io);
 
 app.use('/api/auth', authRouter);
