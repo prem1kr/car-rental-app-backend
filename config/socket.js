@@ -8,7 +8,6 @@ export const socketConnection = (io) => {
             io.emit("receive_message", data);
         });
 
-        // ================= DISCONNECT =================
         socket.on("disconnect", () => {
             console.log("❌ User Disconnected:", socket.id);
         });

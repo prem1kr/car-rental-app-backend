@@ -19,6 +19,10 @@ socketConnection(io);
 
 app.use('/api/auth', authRouter);
 
+io.on('connection', (socket)=> {
+    console.log('a user connected', socket.id);
+})
+
 const startServer = async () => {
     await ConnectMongoose();
 
