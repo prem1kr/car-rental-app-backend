@@ -15,21 +15,24 @@ app.use(cors());
 const server = createServer(app);
 const io = new Server(server, {
     cors: {
-        origin:'http://localhost:8081'
+        origin: 'http://localhost:8081'
     }
 });
-socketConnection(io);
 
+// auth routes
 app.use('/api/auth', authRouter);
 
-io.on('connection', (socket)=> {
+// socket connection
+socketConnection(io);
+io.on('connection', (socket) => {
     console.log('a user connected', socket.id);
     io.emit("new_user", socket.id);
-    socket.on("disconnect", ()=> {
+    socket.on("disconnect", () => {
         console.log('user disconnected', socket.id);
     })
 })
 
+// server running
 const startServer = async () => {
     await ConnectMongoose();
 
