@@ -26,13 +26,17 @@ app.use('/api/car', carRouter);
 
 // socket connection
 socketConnection(io);
-io.on('connection', (socket) => {
+const Room = 'group';
+
+io.on('connection', async(socket) => {
     console.log('a user connected', socket.id);
-    io.emit("new_user", socket.id);
-    socket.on("disconnect", () => {
-        console.log('user disconnected', socket.id);
-    })
-})
+
+   socket.on('joinRoom', (userName) => {
+    console.log(`${userName} is joined the group`);
+    await socket.join(Room);
+   });
+
+});
 
 // server running
 const startServer = async () => {
