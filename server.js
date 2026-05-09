@@ -6,44 +6,59 @@ import authRouter from "./routes/authRoute.js";
 import { createServer } from 'node:http';
 import { Server } from "socket.io";
 import { socketConnection } from "./config/socket.js";
-//import carRouter from "./routes/carRoute.js";
-
+// import carRouter from "./routes/carRoute.js";
 
 dotenv.config();
 const app = express();
 app.use(express.json());
 app.use(cors());
+
 const server = createServer(app);
 const io = new Server(server, {
     cors: {
-        origin: 'http://localhost:8081'
-    }
+        origin: "*",
+    },
 });
 
-// auth routes
+// ROUTES
 app.use('/api/auth', authRouter);
-//app.use('/api/car', carRouter);
 
+// app.use('/api/car', carRouter);
 // socket connection
 socketConnection(io);
 const Room = 'group';
 
-io.on('connection', async(socket) => {
-    console.log('a user connected', socket.id);
+// SOCKET CONNECTION
+io.on('connection', (socket) => {
+    console.log('A user connected:', socket.id);
 
-   socket.on('joinRoom', async(userName) => {
-    console.log(`${userName} is joined the group`);
-    await socket.join(Room);
-   });
+    // JOIN ROOM
+    socket.on('joinRoom', (userName) => {
+        socket.join(Room);
+        console.log(`${userName} joined the group with socket id: ${socket.id}`);
+        // SEND TO ALL USERS EXCEPT CURRENT USER
+        socket.to(Room).emit('RoomNotice',`${userName} joined the group`);
+    });
+
+    // CHAT MESSAGE
+    socket.on('chatMessage', (msg) => {
+        console.log('Message:', msg);
+        // SEND MESSAGE TO OTHERS
+        socket.to(Room).emit('chatMessage', msg);
+    });
+
+    // DISCONNECT
+    socket.on('disconnect', () => {
+        console.log('User disconnected:', socket.id);
+    });
 
 });
 
-// server running
+// START SERVER
 const startServer = async () => {
     await ConnectMongoose();
-
     server.listen(process.env.PORT || 5000, () => {
-        console.log(`🚀 Server running on port ${process.env.PORT || 5000}`);
+        console.log(` Server running on port ${process.env.PORT || 5000}`);
     });
 };
 
