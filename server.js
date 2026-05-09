@@ -31,7 +31,7 @@ const Room = 'group';
 io.on('connection', async(socket) => {
     console.log('a user connected', socket.id);
 
-   socket.on('joinRoom', (userName) => {
+   socket.on('joinRoom', async(userName) => {
     console.log(`${userName} is joined the group`);
     await socket.join(Room);
    });
