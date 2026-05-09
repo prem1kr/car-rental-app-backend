@@ -25,7 +25,7 @@ const io = new Server(server, {
 
 // ROUTES
 app.use('/api/auth', authRouter);
-socketConnection();
+socketConnection(io);
 
 // STORE ADMIN SOCKET ID
 let adminSocketId = null;
