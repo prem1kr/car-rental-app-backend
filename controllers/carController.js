@@ -38,7 +38,7 @@ export const AddCar = async (req, res) => {
 
 // EDIT CAR
 
-export const editCar = async (req, res) => {
+export const EditCar = async (req, res) => {
 
    try {
 
