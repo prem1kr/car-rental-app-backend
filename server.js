@@ -6,7 +6,7 @@ import authRouter from "./routes/authRoute.js";
 import { createServer } from 'node:http';
 import { Server } from "socket.io";
 import { socketConnection } from "./config/socket.js";
-// import carRouter from "./routes/carRoute.js";
+import carRouter from "./routes/carRoute.js";
 
 dotenv.config();
 const app = express();
@@ -23,7 +23,7 @@ const io = new Server(server, {
 // ROUTES
 app.use('/api/auth', authRouter);
 
-// app.use('/api/car', carRouter);
+app.use('/api/car', carRouter);
 // socket connection
 socketConnection(io);
 const Room = 'group';
