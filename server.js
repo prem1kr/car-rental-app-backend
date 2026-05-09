@@ -36,14 +36,12 @@ io.on('connection', (socket) => {
     // JOIN ROOM
     socket.on('joinRoom', (userName) => {
         socket.join(Room);
-        console.log(`${userName} joined the group with socket id: ${socket.id}`);
         // SEND TO ALL USERS EXCEPT CURRENT USER
         socket.to(Room).emit('RoomNotice', `${userName} joined the group`);
     });
 
     // CHAT MESSAGE
     socket.on('chatMessage', (msg) => {
-        console.log('Message:', msg);
         // SEND MESSAGE TO OTHERS
         socket.to(Room).emit('chatMessage', msg);
     });
