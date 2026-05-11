@@ -7,7 +7,7 @@ export const ProfielEdit = async (req, res) => {
         const profile = await profileModel.findOne({ email, name });
         if (!profile) {
             return res.status(404).json({ message: 'User not found, Login first' }, profile);
-            console.log(`user not found, Login first ${profile}`);
+            console.log(`user not found, Login first`);
         }
         const updatedProfile = await profileModel.findOneAndUpdate({ email, name }, {
             phone,
