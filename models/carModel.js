@@ -3,34 +3,34 @@ import mongoose from "mongoose";
 const carSchema = new mongoose.Schema({
     carName: {
         type: String,
-        require: true,
+        required: true,
         trim: true
     },
     brand: {
         type: String,
-        require: true,
+        required: true,
         trim: true
     },
     carNumber: {
         type: String,
-        require: true,
+        required: true,
         trim: true,
         unique: true,
         uppercase: true,
     },
     color: {
         type: String,
-        require: true,
+        required: true,
         trim: true
     },
     fuelType: {
         type: String,
-        require: true,
+        required: true,
         enum: ['Petrol', 'Diesel', 'Electric', 'Hybrid', 'CNG']
     },
     price: {
         type: String,
-        require: true
+        required: true
     },
     images: [
         {

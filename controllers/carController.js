@@ -39,35 +39,20 @@ export const AddCar = async (req, res) => {
 // EDIT CAR
 
 export const EditCar = async (req, res) => {
+    
     try {
         const { id } = req.params;
-        const { carName, brand, carNumber, color, fuelType, price, images, available } = req.body;
+        const updatedCar = await carModel.findByIdAndUpdate(
+            id,
+            req.body,
+            { new: true }
+        );
 
-        // FIND CAR
-        const car = await carModel.findById(id);
-        if (!car) {
-            return res.status(404).json({ success: false, message: "Car not found" });
-        }
-
-        // UPDATE CAR
-        car.carName = carName || car.carName;
-        car.brand = brand || car.brand;
-        car.carNumber = carNumber ? carNumber.toUpperCase() : car.carNumber;
-        car.color = color || car.color;
-        car.fuelType = fuelType || car.fuelType;
-        car.price = price || car.price;
-        car.images = images || car.images;
-
-        if (available !== undefined) {
-            car.available = available;
-        }
-
-        await carModel.save();
-        return res.status(200).json({ success: true, message: "Car updated successfully", car });
+        res.status(200).json({ success: true, car: updatedCar });
 
     } catch (error) {
         console.log(error);
-        return res.status(500).json({ success: false, message: "Server error", error: error.message });
+        res.status(500).json({ success: false, message: 'Server error', error: error.message });
     }
 };
 
@@ -75,6 +60,7 @@ export const EditCar = async (req, res) => {
 // REMOVE CAR
 
 export const RemoveCar = async (req, res) => {
+
     try {
         const { id } = req.params;
         const car = await carModel.findById(id);
