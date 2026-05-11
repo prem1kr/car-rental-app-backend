@@ -56,7 +56,6 @@ export const EditCar = async (req, res) => {
     }
 };
 
-
 // REMOVE CAR
 
 export const RemoveCar = async (req, res) => {
