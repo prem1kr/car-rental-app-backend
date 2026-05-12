@@ -3,7 +3,7 @@ import { GetProfile, ProfielEdit } from '../controllers/profileController.js';
 
 const profileRouter = express.Router();
 
-profileRouter.put('/profile-edit', ProfielEdit);
+profileRouter.post('/profile-edit', ProfielEdit);
 profileRouter.get('/profile-get', GetProfile);
 
 
