@@ -5,7 +5,7 @@ const notificationRouter = express.Router();
 
 notificationRouter.post('/notification-add', AddNotification);
 notificationRouter.get('/notification-get', GetNotification);
-notificationRouter.get('/notification-delete/:id', DeleteNotification);
+notificationRouter.delete('/notification-delete/:id', DeleteNotification);
 notificationRouter.put('/notification-read/:id', MarkedRead );
 
 export default notificationRouter;
