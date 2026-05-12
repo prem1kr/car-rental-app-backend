@@ -4,25 +4,38 @@ export const ProfielEdit = async (req, res) => {
     try {
         const { name, email, phone, address, drivingLicense, expiry, contact } = req.body;
 
-        const profile = await profileModel.findOne({ email, name });
+        let profile = await profileModel.findOne({ email, name });
         if (!profile) {
-            console.log('user not found');
-            return res.status(404).json({ success: false, message: 'User not found, Login first' });
+            profile = await profileModel.create({
+                name,
+                email,
+                phone,
+                address,
+                drivingLicense,
+                expiry,
+                contact,
+            });
+            return res.status(201).json({ success: true, message: 'Profile created successfully', profile });
         }
-        const updatedProfile = await profileModel.findOneAndUpdate({ email, name }, {
-            phone,
-            address,
-            drivingLicense,
-            expiry,
-            contact,
-        }, { new: true });
-        return res.status(200).json({ success: true, message: 'Profile updated successfully', profile: updatedProfile })
+
+        const updatedProfile = await profileModel.findOneAndUpdate(
+            { email, name },
+            {
+                phone,
+                address,
+                drivingLicense,
+                expiry,
+                contact,
+            },
+            { new: true }
+        );
+        return res.status(200).json({ success: true, message: 'Profile updated successfully', profile: updatedProfile });
 
     } catch (error) {
-        return res.status(500).json({ success: false, message: 'Server Error', error: error.message });
         console.log(error);
+        return res.status(500).json({ success: false, message: 'Server Error', error: error.message });
     }
-}
+};
 
 
 export const GetProfile = async (req, res) => {

@@ -8,6 +8,7 @@ import { Server } from "socket.io";
 import { socketConnection } from "./config/socket.js";
 import carRouter from "./routes/carRoute.js";
 import profileRouter from "./routes/profileRoute.js";
+import notificationRouter from "./routes/notificationRoute.js";
 
 dotenv.config();
 const app = express();
@@ -25,6 +26,7 @@ const io = new Server(server, {
 app.use('/api/auth', authRouter);
 app.use('/api/car', carRouter);
 app.use('/api/profile', profileRouter);
+app.use('/api/notification', notificationRouter);
 
 // socket connection
 socketConnection(io);
