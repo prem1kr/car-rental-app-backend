@@ -8,7 +8,7 @@ const sendEmail = async (to, name) => {
             subject: 'Welcome to DriveNow',
             html: `
                 <div style="font-family:sans-serif;">
-                    <h2>Welcome ${name} 🚗</h2>
+                    <h2>Welcome ${name} </h2>
                     <p>Your account has been created successfully.</p>
                     <p>Thank you for joining DriveNow.</p>
                 </div>
