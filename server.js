@@ -27,6 +27,15 @@ app.use('/api/auth', authRouter);
 app.use('/api/car', carRouter);
 app.use('/api/profile', profileRouter);
 app.use('/api/notification', notificationRouter);
+app.get('/test-mail', async (req, res) => {
+    try {
+        await sendEmail('yourgmail@gmail.com', 'Prem');
+        res.send('Mail Sent');
+    } catch (error) {
+        console.log(error);
+        res.send('Mail Failed');
+    }
+});
 
 // socket connection
 socketConnection(io);
