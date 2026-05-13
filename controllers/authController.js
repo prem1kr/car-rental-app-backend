@@ -1,6 +1,7 @@
 import authModel from "../models/authModel.js";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
+import sendEmail from "../utils/sendEmail.js";
 
 export const Signup = async (req, res) => {
     try {
@@ -17,6 +18,8 @@ export const Signup = async (req, res) => {
             email,
             password: hashPassword,
         });
+                await sendEmail(email, name);
+
 
         return res.status(201).json({
             message: "Signup successful",
