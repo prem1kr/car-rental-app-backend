@@ -29,11 +29,11 @@ app.use('/api/profile', profileRouter);
 app.use('/api/notification', notificationRouter);
 app.get('/test-mail', async (req, res) => {
     try {
-        await sendEmail('yourgmail@gmail.com', 'Prem');
+        await sendEmail('prem78334@gmail.com', 'Prem');
         res.send('Mail Sent');
     } catch (error) {
-        console.log(error);
-        res.send('Mail Failed');
+        console.log("FULL ERROR:", error);
+        res.status(500).send(error.message);
     }
 });
 

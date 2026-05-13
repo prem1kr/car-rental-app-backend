@@ -2,21 +2,21 @@ import transporter from '../config/mail.js';
 
 const sendEmail = async (to, name) => {
     try {
-        await transporter.sendMail({
+
+        const info = await transporter.sendMail({
             from: process.env.EMAIL_USER,
-            to: to,
+            to,
             subject: 'Welcome to DriveNow',
             html: `
-                <div style="font-family:sans-serif;">
-                    <h2>Welcome ${name} </h2>
-                    <p>Your account has been created successfully.</p>
-                    <p>Thank you for joining DriveNow.</p>
-                </div>
+                <h1>Welcome ${name}</h1>
             `,
         });
-        console.log('Email Sent Successfully');
+
+        console.log("MAIL RESPONSE:", info);
+
     } catch (error) {
-        console.log('Email Error:', error);
+        console.log("MAIL ERROR:", error);
+        throw error;
     }
 };
 
