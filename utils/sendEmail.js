@@ -1,4 +1,4 @@
-import transporter from '../config/miail.js';
+import transporter from '../config/mail.js';
 
 const sendEmail = async (to, name) => {
     try {

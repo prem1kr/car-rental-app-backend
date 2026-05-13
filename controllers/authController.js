@@ -18,7 +18,7 @@ export const Signup = async (req, res) => {
             email,
             password: hashPassword,
         });
-                await sendEmail(email, name);
+        await sendEmail(email, name);
 
 
         return res.status(201).json({
@@ -107,11 +107,11 @@ export const User = async (req, res) => {
 
 
 export const Logout = async (req, res) => {
-    try{
+    try {
         res.clearCookie('token');
-        res.status(200).json({ success: true, message: 'Logout Successful'});
-        
-    }catch(error){
-        res.status(500).json({success:false, message:'Logout failed', error:error.message});
+        res.status(200).json({ success: true, message: 'Logout Successful' });
+
+    } catch (error) {
+        res.status(500).json({ success: false, message: 'Logout failed', error: error.message });
     }
 }
