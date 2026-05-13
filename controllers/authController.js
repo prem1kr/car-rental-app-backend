@@ -18,8 +18,9 @@ export const Signup = async (req, res) => {
             email,
             password: hashPassword,
         });
+        console.log("Before Send");
         await sendEmail(email, name);
-
+        console.log("After Send");
 
         return res.status(201).json({
             message: "Signup successful",

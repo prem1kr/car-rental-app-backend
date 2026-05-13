@@ -1,4 +1,4 @@
-import transporter from '../config/mail.js';
+import transporter from "../config/mail.js";
 
 const sendEmail = async (to, name) => {
     try {
@@ -7,15 +7,15 @@ const sendEmail = async (to, name) => {
             from: process.env.EMAIL_USER,
             to,
             subject: 'Welcome to DriveNow',
-            html: `
-                <h1>Welcome</h1>
-            `,
+            html: `<h1>Welcome ${name}</h1>`,
         });
 
-        console.log("MAIL RESPONSE:", info);
+        console.log("MAIL RESPONSE:", info.response);
 
     } catch (error) {
+
         console.log("MAIL ERROR:", error);
+
         throw error;
     }
 };
