@@ -9,6 +9,7 @@ import { socketConnection } from "./config/socket.js";
 import carRouter from "./routes/carRoute.js";
 import profileRouter from "./routes/profileRoute.js";
 import notificationRouter from "./routes/notificationRoute.js";
+import sendEmail from "./utils/sendEmail.js";
 
 dotenv.config();
 const app = express();
