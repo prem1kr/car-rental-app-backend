@@ -28,6 +28,7 @@ app.use('/api/auth', authRouter);
 app.use('/api/car', carRouter);
 app.use('/api/profile', profileRouter);
 app.use('/api/notification', notificationRouter);
+
 app.get('/test-mail', async (req, res) => {
     try {
         await sendEmail('prem78334@gmail.com', 'Prem');
