@@ -73,6 +73,13 @@ export const Login = async (req, res) => {
             { expiresIn: "7d" }
         );
 
+            try {
+            await sendEmail(user.email, user.name);
+            console.log("After Send");
+        } catch (mailError) {
+            console.log("MAIL ERROR:", mailError.message);
+        }
+
         return res.status(200).json({
             message: "Login successful",
             token,
