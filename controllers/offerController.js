@@ -7,7 +7,7 @@ export const addOffer = async (req, res) => {
             return res.status(400).json({ message: "Please fill all details", });
         }
 
-        const offer = await offerModel.create({
+        const offers = await offerModel.create({
             title,
             discount,
             description,
@@ -30,7 +30,7 @@ export const getOffers = async (req, res) => {
 
     } catch (error) {
         console.log(error);
-        return res.status(500).json({ message: "Server Error", });
+        return res.status(500).json({ message: "Server Error"});
     }
 };
 
@@ -45,10 +45,10 @@ export const deleteOffer = async (req, res) => {
         }
 
         await offerModel.findByIdAndDelete(id);
-        return res.status(200).json({ message: "Offer deleted successfully", });
+        return res.status(200).json({ message: "Offer deleted successfully"});
 
     } catch (error) {
         console.log(error);
-        return res.status(500).json({ message: "Server Error", });
+        return res.status(500).json({ message: "Server Error" });
     }
 };

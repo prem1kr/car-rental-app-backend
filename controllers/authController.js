@@ -106,6 +106,7 @@ export const User = async (req, res) => {
     }
 };
 
+
 export const TotalUser = async (req, res) => {
     try {
         const total = await authModel.countDocuments();

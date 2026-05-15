@@ -36,10 +36,8 @@ export const AddCar = async (req, res) => {
 };
 
 
-// EDIT CAR
-
 export const EditCar = async (req, res) => {
-    
+
     try {
         const { id } = req.params;
         const updatedCar = await carModel.findByIdAndUpdate(
@@ -56,7 +54,6 @@ export const EditCar = async (req, res) => {
     }
 };
 
-// REMOVE CAR
 
 export const RemoveCar = async (req, res) => {
 
@@ -93,3 +90,15 @@ export const getCar = async (req, res) => {
         return res.status(500).json({ success: false, message: "Server Error", error: error.message });
     }
 };
+
+
+export const TotalCars = async (req, res) => {
+    try {
+        const total = await carModel.countDocuments();
+        return res.status(200).json({ success: true, message: "user count successfully fetched", total });
+
+    } catch (error) {
+        console.log(error);
+        return res.status(500).json({ success: false, message: "server error", error: error.message });
+    }
+}
