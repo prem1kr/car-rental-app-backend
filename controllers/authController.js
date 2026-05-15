@@ -1,7 +1,7 @@
 import authModel from "../models/authModel.js";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
-import sendEmail from "../utils/sendEmail.js";
+// import sendEmail from "../utils/sendEmail.js";
 
 export const Signup = async (req, res) => {
     try {
@@ -19,12 +19,12 @@ export const Signup = async (req, res) => {
             password: hashPassword,
         });
         
-          try {
-            await sendEmail(user.email, user.name);
-            console.log("After Send");
-        } catch (mailError) {
-            console.log("MAIL ERROR:", mailError.message);
-        }
+        //   try {
+        //     await sendEmail(user.email, user.name);
+        //     console.log("After Send");
+        // } catch (mailError) {
+        //     console.log("MAIL ERROR:", mailError.message);
+        // }
 
         return res.status(201).json({
             message: "Signup successful",
@@ -72,13 +72,6 @@ export const Login = async (req, res) => {
             process.env.JWT_SECRET,
             { expiresIn: "7d" }
         );
-
-            try {
-            await sendEmail(user.email, user.name);
-            console.log("After Send");
-        } catch (mailError) {
-            console.log("MAIL ERROR:", mailError.message);
-        }
 
         return res.status(200).json({
             message: "Login successful",
