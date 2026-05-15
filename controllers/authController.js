@@ -1,7 +1,7 @@
 import authModel from "../models/authModel.js";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
-import sendEmail from "../utils/sendEmail.js";
+// import sendEmail from "../utils/sendEmail.js";
 
 export const Signup = async (req, res) => {
     try {
@@ -18,9 +18,9 @@ export const Signup = async (req, res) => {
             email,
             password: hashPassword,
         });
-        console.log("Before Send");
-        await sendEmail(email, name);
-        console.log("After Send");
+        // console.log("Before Send");
+        // await sendEmail(email, name);
+        // console.log("After Send");
 
         return res.status(201).json({
             message: "Signup successful",
@@ -105,6 +105,17 @@ export const User = async (req, res) => {
         return res.status(500).json({ message: "Server Error" });
     }
 };
+
+export const TotalUser = async (req, res) => {
+    try {
+        const total = await authModel.countDocuments();
+        return res.status(200).json({ success: true, message: "user count successfully fetched", total });
+
+    } catch (error) {
+        console.log(error);
+        return res.status(500).json({ success: false, message: "server error", error: error.message });
+    }
+}
 
 
 export const Logout = async (req, res) => {
