@@ -13,7 +13,7 @@ export const addOffer = async (req, res) => {
             description,
             validity
         });
-        return res.status(201).json({ message: "Offer added successfully", offer });
+        return res.status(201).json({ message: "Offer added successfully", offers });
 
     } catch (error) {
         console.log(error);
