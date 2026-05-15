@@ -7,7 +7,7 @@ export const addOffer = async (req, res) => {
             return res.status(400).json({ message: "Please fill all details", });
         }
 
-        const offer = await offerModel.create({
+        const offers = await offerModel.create({
             title,
             discount,
             description,
