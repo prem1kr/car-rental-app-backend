@@ -46,17 +46,17 @@ export const getReview = async (req, res) => {
 }
 
 
-export const deleteReview = (req, res) => {
+export const deleteReview = async (req, res) => {
     try {
         const { id } = req.params;
         await reviewModel.findByIdAndDelete(id);
-        req.status(200).json({ success: true, message: "Review deleted successfully" });
+        res.status(200).json({ success: true, message: "Review deleted successfully" });
 
     } catch (error) {
         console.log("Delete Review Error:", error);
         res.status(500).json({ success: false, message: "Server Error" });
     }
-}
+};
 
 
 export const getCarReviews = async (req, res) => {
