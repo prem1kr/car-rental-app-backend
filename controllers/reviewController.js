@@ -36,7 +36,7 @@ export const addReview = async (req, res) => {
 
 export const getReview = async (req, res) => {
     try {
-        const reviews = await reviewModel.find().sort({ createdAt: -1 });
+        const reviews = await reviewModel.find().populate("carId").sort({ createdAt: -1 });
         res.status(200).json({ success: true, reviews });
 
     } catch (error) {
