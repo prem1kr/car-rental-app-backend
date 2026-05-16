@@ -11,6 +11,7 @@ import profileRouter from "./routes/profileRoute.js";
 import notificationRouter from "./routes/notificationRoute.js";
 import sendEmail from "./utils/sendEmail.js";
 import offerRouter from "./routes/offerRoute.js";
+import reviewRouter from "./routes/reviewRoute.js";
 
 dotenv.config();
 const app = express();
@@ -29,12 +30,12 @@ app.use(cors({
     methods: ["GET", "POST", "PUT", "DELETE"],
 }));
 
-// ROUTES
 app.use('/api/auth', authRouter);
 app.use('/api/car', carRouter);
 app.use('/api/profile', profileRouter);
 app.use('/api/notification', notificationRouter);
 app.use('/api/offer', offerRouter);
+app.use('/api/review', reviewRouter);
 
 app.get('/test-mail', async (req, res) => {
     try {
@@ -51,31 +52,24 @@ socketConnection(io);
 const Room = 'group';
 let adminSockedId = null;
 
-// SOCKET CONNECTION
 io.on('connection', (socket) => {
     console.log('A user connected:', socket.id);
 
-    // JOIN ROOM
     socket.on('joinRoom', (userName) => {
         socket.join(Room);
-        // SEND TO ALL USERS EXCEPT CURRENT USER
         socket.to(Room).emit('RoomNotice', `${userName} joined the group`);
     });
 
-    // CHAT MESSAGE
     socket.on('chatMessage', (msg) => {
-        // SEND MESSAGE TO OTHERS
         socket.to(Room).emit('chatMessage', msg);
     });
 
-    // DISCONNECT
     socket.on('disconnect', () => {
         console.log('User disconnected:', socket.id);
     });
 
 });
 
-// START SERVER
 const startServer = async () => {
     await ConnectMongoose();
     server.listen(process.env.PORT || 5000, () => {

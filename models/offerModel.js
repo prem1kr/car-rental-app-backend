@@ -27,5 +27,4 @@ const offerSchema = new mongoose.Schema({
     },
 }, { timestamps: true });
 
-const offerModel = mongoose.model("Offer", offerSchema);
-export default offerModel;
+export default mongoose.model("Offer", offerSchema);
