@@ -2,8 +2,8 @@ import offerModel from "../models/offerModel.js";
 
 export const addOffer = async (req, res) => {
     try {
-        const { title, discount, description, validity } = req.body;
-        if (!title || !discount || !description || !validity) {
+        const { title, discount, description, code, validity } = req.body;
+        if (!title || !discount || !description || !code || !validity) {
             return res.status(400).json({ message: "Please fill all details", });
         }
 
@@ -11,6 +11,7 @@ export const addOffer = async (req, res) => {
             title,
             discount,
             description,
+            code,
             validity
         });
         return res.status(201).json({ message: "Offer added successfully", offers });
