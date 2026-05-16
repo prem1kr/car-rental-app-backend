@@ -12,6 +12,7 @@ import notificationRouter from "./routes/notificationRoute.js";
 import sendEmail from "./utils/sendEmail.js";
 import offerRouter from "./routes/offerRoute.js";
 import reviewRouter from "./routes/reviewRoute.js";
+import bookingRouter from "./routes/bookingRoute.js";
 
 dotenv.config();
 const app = express();
@@ -36,6 +37,7 @@ app.use('/api/profile', profileRouter);
 app.use('/api/notification', notificationRouter);
 app.use('/api/offer', offerRouter);
 app.use('/api/review', reviewRouter);
+app.use('/api/booking', bookingRouter);
 
 app.get('/test-mail', async (req, res) => {
     try {
