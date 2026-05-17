@@ -1,6 +1,5 @@
 import carModel from "../models/carModel.js";
 
-
 export const AddCar = async (req, res) => {
 
     try {
