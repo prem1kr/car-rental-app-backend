@@ -73,6 +73,21 @@ export const updateBookingStatus = async (req, res) => {
             { status },
             { new: true }
         );
+        
+        if(status === "Completed") {
+            await carModel.findByIdAndUpdate(
+                booking.carId,
+                {available:true}
+            )
+        }
+
+        if(status === "Confirmed"){
+            await carModel.findByIdAndUpdate(
+                booking.carId,
+                {available:false}
+            )
+        }
+
         res.status(200).json({ success: true, message: "Booking status updated", booking });
 
     } catch (error) {
