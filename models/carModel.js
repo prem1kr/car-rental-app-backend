@@ -56,5 +56,4 @@ const carSchema = new mongoose.Schema({
 
 }, { timestamps: true });
 
-const Car = mongoose.models.Car || mongoose.model("Car", carSchema);
-export default Car;
+export default mongoose.model("Car", carSchema);
