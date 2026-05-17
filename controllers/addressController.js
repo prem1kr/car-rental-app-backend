@@ -3,6 +3,11 @@ import addressModel from "../models/addressModel.js";
 export const addAddress = async (req, res) => {
     try {
         const { userId, label, address, city, state, pincode } = req.body;
+
+        if (!userId || !label || !address || !city || !state || !pincode) {
+            return res.status(400).json({ success: false, message: "All fields are required" });
+        }
+
         const newAddress = await addressModel.create({
             userId,
             label,
@@ -10,12 +15,13 @@ export const addAddress = async (req, res) => {
             city,
             state,
             pincode,
+            isDefault: false
         });
         res.status(201).json({ success: true, message: "Address added successfully", newAddress });
 
     } catch (error) {
-        console.log(error);
-        res.status(500).json({ success: false, message: "Server Error" });
+        console.log("ADD ADDRESS ERROR:", error);
+        res.status(500).json({ success: false, message: error.message });
     }
 };
 
