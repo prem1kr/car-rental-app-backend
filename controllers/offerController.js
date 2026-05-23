@@ -4,7 +4,7 @@ export const addOffer = async (req, res) => {
     try {
         const { title, discount, description, code, validity } = req.body;
         if (!title || !discount || !description || !code || !validity) {
-            return res.status(400).json({ message: "Please fill all details", });
+            return res.status(400).json({ success:false, message: "Please fill all details", });
         }
 
         const offers = await offerModel.create({
@@ -14,11 +14,11 @@ export const addOffer = async (req, res) => {
             code,
             validity
         });
-        return res.status(201).json({ message: "Offer added successfully", offers });
+        return res.status(201).json({ success:true,message: "Offer added successfully", offers });
 
     } catch (error) {
         console.log(error);
-        return res.status(500).json({ message: "Server Error" });
+        return res.status(500).json({success:false, message: "Server Error" });
     }
 };
 
@@ -27,11 +27,11 @@ export const addOffer = async (req, res) => {
 export const getOffers = async (req, res) => {
     try {
         const offers = await offerModel.find().sort({ createdAt: -1 });
-        return res.status(200).json({ message: "Offers fetched successfully", offers });
+        return res.status(200).json({success: true, message: "Offers fetched successfully", offers });
 
     } catch (error) {
         console.log(error);
-        return res.status(500).json({ message: "Server Error"});
+        return res.status(500).json({success:false,  message: "Server Error" });
     }
 };
 
@@ -42,14 +42,14 @@ export const deleteOffer = async (req, res) => {
         const { id } = req.params;
         const offer = await offerModel.findById(id);
         if (!offer) {
-            return res.status(404).json({ message: "Offer not found" });
+            return res.status(404).json({success:false, message: "Offer not found" });
         }
 
         await offerModel.findByIdAndDelete(id);
-        return res.status(200).json({ message: "Offer deleted successfully"});
+        return res.status(200).json({success:true, message: "Offer deleted successfully" });
 
     } catch (error) {
         console.log(error);
-        return res.status(500).json({ message: "Server Error" });
+        return res.status(500).json({success:false, message: "Server Error" });
     }
 };

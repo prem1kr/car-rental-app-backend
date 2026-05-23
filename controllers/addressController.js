@@ -39,7 +39,6 @@ export const getUserAddresses = async (req, res) => {
 };
 
 
-// update address
 export const updateAddress = async (req, res) => {
     try {
         const { id } = req.params;
