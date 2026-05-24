@@ -105,9 +105,7 @@ export const getUserReviews = async (req, res) => {
     try {
         const { userId } = req.params;
         const review = await reviewModel.find({ userId }).populate("carId").sort({ createdAt: -1 });
-        if (reviews.length === 0) {
-            return res.status(200).json({ success: true, message: "review fetched successfully", review });
-        }
+        return res.status(200).json({ success: true, message: "review fetched successfully", review });
 
     } catch (error) {
         console.log(error);
