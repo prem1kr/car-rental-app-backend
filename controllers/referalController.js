@@ -79,3 +79,19 @@ export const getReferal = async (req, res) => {
         return res.status(500).json({ success: false, message: "Server Error", error: error.message });
     }
 }
+
+
+export const getAllreferal = async (req, res) => {
+    try{
+        const referals = await referralModel.find();
+        if(!referals){
+            return res.status(404).json({success:false, message:"referal not found"});
+        }
+
+        return res.status(200).json({success:true, message:"referal fetched successfully", referals});
+
+    }catch(error){
+        console.log(error);
+        return res.status(500).json({success:true, message:"Server Error", error:error.message});
+    }
+}

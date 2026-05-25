@@ -44,7 +44,7 @@ app.use('/api/review', reviewRouter);
 app.use('/api/booking', bookingRouter);
 app.use('/api/address', addressRouter);
 app.use('/api/payment', paymentRoute);
-app.use('api/referal', referalRouter);
+app.use('/api/referal', referalRouter);
 
 app.get('/test-mail', async (req, res) => {
     try {
