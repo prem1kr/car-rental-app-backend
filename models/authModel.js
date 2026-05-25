@@ -1,26 +1,36 @@
 import mongoose from "mongoose";
 
 const authSchema = new mongoose.Schema({
+    
     role: {
         type: String,
-        enum:["user","admin"],
-        default:'user'
+        enum: ["user", "admin"],
+        default: 'user'
     },
-    name:{
+    name: {
         type: String,
         trim: true
     },
-    email:{
+    email: {
         type: String,
         unique: true,
         required: true,
         trim: true
     },
-    password:{
+    password: {
         type: String,
         required: true
-    }
+    },
+    referralCode: {
+        type: String,
+        unique: true,
+    },
 
-},{timestamps: true});
+    totalReferralEarnings: {
+        type: Number,
+        default: 0,
+    },
+
+}, { timestamps: true });
 
 export default mongoose.model("User", authSchema);
