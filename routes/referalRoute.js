@@ -3,7 +3,7 @@ import { applyReferal, generateReferal, getReferal } from "../controllers/refera
 
 const referalRouter = express.Router();
 
-referalRouter.get("/generate-code/:userId", generateReferal);
+referalRouter.post("/generate-code/:userId", generateReferal);
 referalRouter.post("/apply-code/:newUserId", applyReferal);
 referalRouter.get("/referal-details/:userId", getReferal);
 
