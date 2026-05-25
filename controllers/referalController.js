@@ -49,7 +49,7 @@ export const applyReferal = async (req, res) => {
             referredUser: newUserId,
             referralCode,
             status: "Joined",
-            rewardAmount:100,
+            rewardAmount: 100,
         });
 
         referrer.totalReferralEarnings += 100;
@@ -82,16 +82,16 @@ export const getReferal = async (req, res) => {
 
 
 export const getAllreferal = async (req, res) => {
-    try{
-        const referals = await referralModel.find();
-        if(!referals){
-            return res.status(404).json({success:false, message:"referal not found"});
+    try {
+        const referals = await referralModel.find().populate("referrer", "name email referralCode").populate("referredUser", "name email").sort({ createdAt: -1 });;
+        if (!referals) {
+            return res.status(404).json({ success: false, message: "referal not found" });
         }
 
-        return res.status(200).json({success:true, message:"referal fetched successfully", referals});
+        return res.status(200).json({ success: true, message: "referal fetched successfully", referals });
 
-    }catch(error){
+    } catch (error) {
         console.log(error);
-        return res.status(500).json({success:true, message:"Server Error", error:error.message});
+        return res.status(500).json({ success: true, message: "Server Error", error: error.message });
     }
 }
