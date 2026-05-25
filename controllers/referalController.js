@@ -49,7 +49,7 @@ export const applyReferal = async (req, res) => {
             referredUser: newUserId,
             referralCode,
             status: "Joined",
-            rewardAmount: 100,
+            rewardAmount
         });
 
         referrer.totalReferralEarnings += 100;
