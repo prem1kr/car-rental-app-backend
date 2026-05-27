@@ -15,7 +15,7 @@ import reviewRouter from "./routes/reviewRoute.js";
 import bookingRouter from "./routes/bookingRoute.js";
 import addressRouter from "./routes/addressRoute.js";
 import referalRouter from "./routes/referalRoute.js";
-import paymentRoute from "./routes/paymentCardsRoute.js";
+import paymentRoute from "./routes/paymentRoute.js";
 import paymentsRouter from "./routes/paymentsRoute.js";
 
 dotenv.config();
