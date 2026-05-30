@@ -12,6 +12,14 @@ export const createPaymentController = async (req, res) => {
         if (!booking) {
             return res.status(404).send({ success: false, message: "Booking not found" });
         }
+        const existingPayment = await paymentsModel.findOne({ bookingId });
+
+if (existingPayment) {
+    return res.status(400).send({
+        success: false,
+        message: "Payment already exists for this booking",
+    });
+}
 
         const payment = await paymentsModel.create({
             bookingId,
