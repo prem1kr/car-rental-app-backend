@@ -1,5 +1,5 @@
 import bookingModel from "../models/bookingModel.js";
-import paymentModel from "../models/paymentsModel.js";
+import paymentsModel from "../models/paymentsModel.js";
 
 export const createPaymentController = async (req, res) => {
     try {
