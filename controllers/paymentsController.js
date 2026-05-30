@@ -32,7 +32,7 @@ if (existingPayment) {
 
         booking.paymentStatus = "Paid";
         booking.paymentMethod = paymentMethod;
-        booking.status = "Confirmed";
+        booking.status = "Pending";
         await booking.save();
 
         res.status(201).send({ success: true, message: "Payment completed successfully", payment });
