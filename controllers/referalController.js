@@ -13,7 +13,8 @@ export const generateReferal = async (req, res) => {
             return res.status(200).json({ success: true, referralCode: user.referralCode });
         }
 
-        const code = (user.name.substring(0, 4).toUpperCase() || "USER") + Math.floor(1000 + Math.random() * 9000);
+        const base = (user.name || "USER").substring(0, 4).toUpperCase();
+        const code = base + Math.floor(1000 + Math.random() * 9000);
         user.referralCode = code;
         await user.save();
         return res.status(200).json({ success: true, referralCode: code });
@@ -23,6 +24,7 @@ export const generateReferal = async (req, res) => {
         return res.status(500).json({ success: false, message: "Server Error", error: error.message });
     }
 }
+
 
 
 export const applyReferal = async (req, res) => {
