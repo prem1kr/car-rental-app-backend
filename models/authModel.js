@@ -21,11 +21,11 @@ const authSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    referralCode: {
-        type: String,
-        unique: true,
-        default:''
-    },
+   referralCode: {
+    type: String,
+    unique: true,
+    sparse: true
+},
 
     totalReferralEarnings: {
         type: Number,
