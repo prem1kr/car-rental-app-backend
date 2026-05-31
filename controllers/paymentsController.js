@@ -24,7 +24,7 @@ export const createPaymentController = async (req, res) => {
             amount,
             paymentMethod,
             transactionId,
-            paymentStatus,
+            paymentStatus:"Pending",
         });
 
         booking.paymentStatus = "Pending";
