@@ -77,8 +77,8 @@ export const getUserPayment = async (req, res) => {
     try {
         const {userId} = req.params;
         const payment = await paymentsModel.find({ userId }).populate("bookingId").sort({createdAt:-1});
-        if (!payment) {
-            return res.status(404).send({ success: false, message: "Payment not found" });
+           if (payment.length === 0) {
+            return res.status(404).send({ success: false,message: "Payment not found" });
         }
 
         res.status(200).send({ success: true, payment });
