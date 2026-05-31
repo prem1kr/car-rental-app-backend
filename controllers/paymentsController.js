@@ -60,7 +60,7 @@ export const getAllPaymentsController = async (req, res) => {
 
 export const getSinglePaymentController = async (req, res) => {
     try {
-        const payment = await paymentsModel.findById(req.params.id).populate("userId").populate("bookingId");
+        const payment = await paymentsModel.findById(req.params.id).populate("bookingId");
         if (!payment) {
             return res.status(404).send({ success: false, message: "Payment not found" });
         }
