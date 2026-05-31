@@ -24,10 +24,10 @@ export const createPaymentController = async (req, res) => {
             amount,
             paymentMethod,
             transactionId,
-            paymentStatus: "Paid",
+            paymentStatus,
         });
 
-        booking.paymentStatus = "Paid";
+        booking.paymentStatus = "Pending";
         booking.paymentMethod = paymentMethod;
         booking.status = "Pending";
          if (booking.totalPrice !== amount) {
