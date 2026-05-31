@@ -97,7 +97,7 @@ export const updatePaymentStatusController = async (req, res) => {
         const payment = await paymentsModel.findByIdAndUpdate(req.params.id,
             { paymentStatus },
             { new: true }
-        );
+        ) .populate("userId", "name email").populate("bookingId");
 
         if (!payment) {
             return res.status(404).send({ success: false, message: "Payment not found" });
