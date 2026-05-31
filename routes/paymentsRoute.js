@@ -1,5 +1,5 @@
 import express from "express";
-import { createPaymentController, deletePaymentController, getAllPaymentsController, getSinglePaymentController, getUserPayment, updatePaymentStatusController } from "../controllers/paymentController.js";
+import { createPaymentController, deletePaymentController, getAllPaymentsController, getSinglePaymentController, getUserPayment, updatePaymentStatusController } from "../controllers/paymentsController.js";
 
 const paymentsRouter = express.Router();
 
