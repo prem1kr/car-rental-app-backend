@@ -73,6 +73,22 @@ export const getSinglePaymentController = async (req, res) => {
     }
 };
 
+export const getUserPayment = async (req, res) => {
+    try {
+        const {userId} = req.params;
+        const payment = await paymentsModel.find({ userId }).populate("bookingId").sort({createdAt:-1});
+        if (!payment) {
+            return res.status(404).send({ success: false, message: "Payment not found" });
+        }
+
+        res.status(200).send({ success: true, payment });
+
+    } catch (error) {
+        console.log(error);
+        res.status(500).send({ success: false, message: "Error while getting payment", error });
+    }
+};
+
 
 
 export const updatePaymentStatusController = async (req, res) => {
