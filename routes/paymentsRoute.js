@@ -8,6 +8,6 @@ paymentsRouter.get("/all-payments", getAllPaymentsController);
 paymentsRouter.get("/payments/:id", getSinglePaymentController);
 paymentsRouter.put("/update-payments-status/:id", updatePaymentStatusController);
 paymentsRouter.delete("/delete-payments/:id", deletePaymentController);
-paymentsRouter.get("/user-paymet/:userId", getUserPayment);
+paymentsRouter.get("/user-payment/:userId", getUserPayment);
 
 export default paymentsRouter;
