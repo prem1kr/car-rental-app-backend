@@ -35,7 +35,7 @@ export const GetNotification = async (req, res) => {
 export const MarkedRead = async (req, res) => {
     try {
         const { id } = req.params;
-        const notification = await notificationModel.findOneAndUpdate(id,
+        const notification = await notificationModel.findByIdAndUpdate(id,
             { read: true }, { new: true }
         );
         if (!notification) {
